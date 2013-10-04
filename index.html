@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+
+		<title>Joomla 3.2 and Beyond - Joomla Day UK 2013</title>
+
+		<meta name="description" content="Presentation for Joomla Day UK 2013">
+		<meta name="author" content="George Wilson">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="css/reveal.min.css">
+		<link rel="stylesheet" href="css/theme/joomla.css" id="theme">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- If the query includes 'print-pdf', use the PDF print sheet -->
+		<script>
+			document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+		<div class="reveal">
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section>
+					<h1>Joomla 3.2 and Beyond</h1>
+					<h3>Looking at what lies ahead for Joomla!</h3>
+					<p>
+						<small>By <a href="http://www.joomjunk.co.uk">George Wilson</a> / <a href="http://twitter.com/GW1992">@GW1992</a></small>
+					</p>
+				</section>
+
+                <section>
+                    <h2>Who am I?</h2>
+                    <div style="float:left;width:25%;">
+                        <img src="images/george.jpg" alt="George Wilson" />
+                    </div>
+                    <div style="float:right;width:75%;">
+                        <ul>
+                            <li><span style="font-weight: bold;">Student</span> - Specialising in drinking, with a minor in physics</li>
+                            <li>Website Enthusiast
+                            <ul>
+                                <li>Developing extensions for Joomla! for the last 3 years</li>
+                                <li>Contributing to the Joomla Docs for the last 1.5 years</li>
+                                <li>Contributing to core for the last 1 year</li>
+                            </ul></li>
+                            <li>Play the saxophone</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section>
+                    <section>
+                        <h2>What are we going to talk about for the next hour?</h2>
+                        <ul>
+                            <li>Joomla! 3.2
+                            <ul>
+                                <li>How the Joomla! Framework will impact the CMS</li>
+                                <li>com_ajax</li>
+                                <li>Content Versioning</li>
+                                <li>The Joomla! App* Store</li>
+                                <li>Other behind the scene features (TinyMCE 4, Form Fields, jQuery rebase etc.)</li>
+                            </ul></li>
+                        </ul>
+                        <small>* Name <span style="text-transform:uppercase">still</span> not decided on yet!</small>
+                    </section>
+
+                    <section>
+                        <h2>What are we going to talk about for the next hour?</h2>
+                        <ul>
+                            <li>Joomla! 4.0
+                            <ul>
+                                <li>UCM</li>
+                                <li>HMVC</li>
+                            </ul></li>
+                        </ul>
+                        <small>This is <span style="text-transform:uppercase">not</span> a guarantee of what will or won't make Joomla 4.x!</small>
+                    </section>
+                </section>
+
+                <section>
+                    <h2>The Framework and the CMS</h2>
+                    <p>Officially unconnected ...</p>
+                    <p class="fragment">BUT</p>
+                    <p class="fragment">Feature requests connected to packages in the framework are still requested to go through the framework first</p>
+                    <p class="fragment">Packages in Joomla are divided up the following way:</p>
+                    <ul class="fragment">
+                        <li>Packages in the Joomla Framework: libraries/joomla</li>
+                        <li>Packages used in the CMS but not in the framework: libraries/cms</li>
+                        <li>Depracted packages in the CMS: libraries/legacy</li>
+                    </ul>
+                    <p class="fragment">Note this rearranging is an ongoing process but should be done well before 3.5</p>
+                </section>
+
+                <section>
+                    <section>
+                        <h2>Joomla AJAX Component</h2>
+                        <p>Currently it's very hard to implement AJAX in a Joomla module or plugin without having to create a new entry point. Of course a new entry point is potentially vulnerable if coded badly.</p>
+                    </section>
+                    <section>
+                        <h2>Usage</h2>
+                        <pre><code data-trim contenteditable style="width:1200px;margin-left:-175px;">
+$.ajax({
+    type: "POST",
+    url: "localhost/joomla32/index.php?option=com_ajax&module=foo&method=submit&format=json",
+    data: request,
+    success:function(response){
+        if (response.sucess)
+        {
+            // Create a success message. Maybe reset the form etc.
+            Joomla.renderMessages(Joomla.JText._('MOD_FOO_SUCCESS'));
+        }
+        else
+        {
+            // Create a error message
+            Joomla.renderMessages(Joomla.JText._('MOD_FOO_ERROR_IN_JS'));
+        }
+                    </code></pre>
+                    </section>
+                </section>
+
+                <section>
+                    <section>
+                        <h2>Content Versioning</h2>
+                        <ul>
+                            <li>Used to keep copies of articles/weblinks/contact (or any content items) in Joomla or any other third party component content if enabled</li>
+                            <li>Easy to implement in any component with only a handful of lines of code</li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h2>Let's have a play about with it!</h2>
+                    </section>
+                    <section>
+                        <h2>Behind the scenes</h2>
+                        <ul>
+                            <li>This uses lots of the UCM API</li>
+                            <li class="fragment">Wait didn't you just say UCM was coming to Joomla! 4?
+                            <ul>
+                                <li>A basic UCM API was introduced by tags in Joomla 3.1 - we'll come back to this later</li>
+                            </ul></li>
+                        </ul>
+                    </section>
+                </section>
+
+                <section>
+                    <section>
+                        <h2>What is UCM</h2>
+                        <img src="images/ucm-google-group.png" alt="UCM was introduced to the Joomla Platform in 2011" height="500px" />
+                        <p>A Unified Content Model (UCM) was first introduced to the Joomla Platform in December 2011</p>
+                    </section>
+
+                    <section>
+                        <h2>What is UCM</h2>
+                        <p>It suggests content has the same basis and can be grouped together</p>
+                        <p>For example the majority of content has a title, enabled state, checkin, created by dates etc.</p>
+                    </section>
+
+                    <section>
+                        <h2>Familiar Fields?</h2>
+                        <img src="images/ucm-table.png" alt="The UCM core table" />
+                    </section>
+
+                    <section>
+                        <h2>Content Types</h2>
+                        <img src="images/content-types-article.png" alt="The content-types table" />
+                    </section>
+
+                    <section>
+                        <h2>Implementation of UCM</h2>
+                        <ul>
+                            <li>A basic UCM API was introduced by tags in Joomla 3.1
+                            <ul>
+                                <li>3 Database tables - #__content_types, #__ucm_base, #__ucm_content) (only the first is being used currently)</li>
+                                <li>3 classes contained in <blockquote>libraries/cms/ucm</blockquote></li>
+                            </ul></li>
+                            <li>Will be much expanded in Joomla 4.x</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h2>How can I use UCM?</h2>
+                        <p>Example of use as part of the ordering field in Joomla</p>
+                        <pre><code data-trim contenteditable>
+$categoryId	= (int) $this->form->getValue('catid');
+$contentType = (string) $this->element['content_type'];
+
+$ucmType = new JUcmType;
+$ucmRow = $ucmType->getType($ucmType->getTypeId($contentType));
+
+$db = JFactory::getDbo();
+$query = $db->getQuery(true);
+$query->select(array($db->quoteName(json_decode($ucmRow->field_mappings)->common->core_ordering, 'value'),
+                        $db->quoteName(json_decode($ucmRow->field_mappings)->common->core_title, 'text')))
+    ->from($db->quoteName(json_decode($ucmRow->table)->special->dbtable))
+    ->where($db->quoteName('catid') . ' = ' . (int) $categoryId)
+    ->order('ordering');
+
+return $query;
+                        </code></pre>
+                    </section>
+                </section>
+
+                <section>
+                    <section>
+                        <h2>Hierarchical model–view–controller (HMVC)</h2>
+                        <ul>
+                            <li>Many of you are familiar with HMVC - however it breaks the DRY principle!!</li>
+                            <li>The principle of HMVC is that you can call the code from anywhere. Imagine calling your backend model in your frontend</li>
+                            <li>... or in a module?</li>
+                            <li>This is actually already done in the RAD layer (Akeeba's FOF) - possibly mentioned in Paul Orwig's talk on this already</li>
+                        </ul>
+                        <pre><code data-trim contenteditable style="width:1100px;margin-left:-100px;">FOFDispatcher::getTmpInstance('com_foobar', 'items', array('input' => $input))->dispatch();</code></pre>
+                    </section>
+                </section>
+
+                <section>
+                    <h2>Stop the Press!</h2>
+                    <h4>Form Fields</h4>
+                    <p>Now support nearly all HTML5 attributes</p>
+                    <h4>Repeatable Form Fields</h4>
+                    <p>Allows users to input as many fields as desired</p>
+                    <h4>jQuery for JS</h4>
+                    <p>The majority of jQuery usage in Joomla 3.2 has been moved from Mootools to jQuery</p>
+                    <h4>TinyMCE 4</h4>
+                    <p>Update to TinyMCE 4. More mobile friendly.</p>
+                    <h4>Revamped Joomla Template Manager</h4>
+                    <p>Almost completely rewritten.</p>
+                </section>
+
+                <section>
+                    <h2>Time to wake up and interact now!</h2>
+                    <p>Feel free to ask any questions you want</p>
+                    <p>I hope I've given plenty of reason's to say #jpositiv</p>
+                </section>
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.min.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
