@@ -85,6 +85,7 @@
                                 <li>HMVC</li>
                             </ul></li>
                         </ul>
+						<div class="clearfix"></div>
                         <small>This is <span style="text-transform:uppercase">not</span> a guarantee of what will or won't make Joomla 4.x!</small>
                     </section>
                 </section>
@@ -120,14 +121,18 @@ $.ajax({
         {
             // Create a success message. Maybe reset the form etc.
             Joomla.renderMessages(Joomla.JText._('MOD_FOO_SUCCESS'));
+
+            // We can retrieve data as well - see the docs on JResponseJson
+            $('#response').val = response.data['success'];
         }
         else
         {
             // Create a error message
             Joomla.renderMessages(Joomla.JText._('MOD_FOO_ERROR_IN_JS'));
         }
-                    </code></pre>
-                    </section>
+});
+</code></pre>
+					</section>
                 </section>
 
                 <section>
@@ -139,7 +144,8 @@ $.ajax({
                         </ul>
                     </section>
                     <section>
-                        <h2>Let's have a play about with it!</h2>
+                        <h2>Let's have a play about with Content Versioning!</h2>
+						<a href="https://github.com/joomla/joomla-cms/pull/2141/files">Pull request for implementing this in banners</a>
                     </section>
                     <section>
                         <h2>Behind the scenes</h2>
@@ -215,7 +221,7 @@ return $query;
                     <section>
                         <h2>Hierarchical model–view–controller (HMVC)</h2>
                         <ul>
-                            <li>Many of you are familiar with HMVC - however it breaks the DRY principle!!</li>
+                            <li>Many of you are familiar with MVC - however it breaks the DRY principle!!</li>
                             <li>The principle of HMVC is that you can call the code from anywhere. Imagine calling your backend model in your frontend</li>
                             <li>... or in a module?</li>
                             <li>This is actually already done in the RAD layer (Akeeba's FOF) - possibly mentioned in Paul Orwig's talk on this already</li>
