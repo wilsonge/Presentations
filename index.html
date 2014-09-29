@@ -3,9 +3,9 @@
 	<head>
 		<meta charset="utf-8">
 
-		<title>Joomla 3.2 and Beyond - Joomla Day UK 2013</title>
+		<title>The new Joomla! MVC</title>
 
-		<meta name="description" content="Presentation for Joomla Day UK 2013">
+		<meta name="description" content="Presentation for Joomla Day UK 2014">
 		<meta name="author" content="George Wilson">
 
 		<meta name="apple-mobile-web-app-capable" content="yes" />
@@ -34,8 +34,8 @@
 			<!-- Any section element inside of this container is displayed as a slide -->
 			<div class="slides">
 				<section>
-					<h1>Joomla 3.2 and Beyond</h1>
-					<h3>Looking at what lies ahead for Joomla!</h3>
+					<h1>The new MVC for Joomla!</h1>
+					<h3>Investigating the new MVC produced as part of Google Summer of Code (GSOC) 2014</h3>
 					<p>
 						<small>By <a href="http://www.joomjunk.co.uk" target="_blank">George Wilson</a> / <a href="http://twitter.com/GW1992">@GW1992</a></small>
 					</p>
@@ -48,200 +48,64 @@
                     </div>
                     <div style="float:right;width:75%;">
                         <ul>
-                            <li><span style="font-weight: bold;">Student</span> - Specialising in drinking, with a minor in physics</li>
                             <li>Website Enthusiast
                             <ul>
-                                <li>Developing extensions for Joomla! for the last 3 years</li>
-                                <li>Contributing to the Joomla Docs for the last 1.5 years</li>
-                                <li>Contributing to core for the last 1 year</li>
+                                <li>Developing extensions for Joomla! for the last 4 years</li>
+                                <li>Contributing to the Joomla Docs for the last 2.5 years</li>
+                                <li>Contributing to core for the last 2 years</li>
                             </ul></li>
+							<li>Senior Developer for Virya Group</li>
+                            <li><span style="font-weight: bold;">Ex</span> Student - Specialising in drinking, with a minor in physics</li>
                             <li>Play the saxophone</li>
                         </ul>
                     </div>
                 </section>
 
                 <section>
-                    <section>
-                        <h2>What are we going to talk about for the next hour?</h2>
+					 <section>
+                        <h2>Aim 1: Remove JObject</h2>
                         <ul>
-                            <li>Joomla! 3.2
-                            <ul>
-                                <li>How the Joomla! Framework will impact the CMS</li>
-                                <li>com_ajax</li>
-                                <li>Content Versioning</li>
-                                <li>The Joomla! App* Store</li>
-                                <li>Other behind the scene features (TinyMCE 4, Form Fields, jQuery rebase etc.)</li>
-                            </ul></li>
-                        </ul>
-                        <small>* Name <span style="text-transform:uppercase">still</span> not decided on yet!</small>
-                    </section>
-
-                    <section>
-                        <h2>What are we going to talk about for the next hour?</h2>
-                        <ul>
-                            <li>Joomla! 4.0
-                            <ul>
-                                <li>UCM</li>
-                                <li>HMVC</li>
-                            </ul></li>
-                        </ul>
-						<div class="clearfix"></div>
-                        <small>This is <span style="text-transform:uppercase">not</span> a guarantee of what will or won't make Joomla 4.x!</small>
-                    </section>
-                </section>
-
-                <section>
-                    <h2>The Framework and the CMS</h2>
-                    <p>Officially unconnected ...</p>
-                    <p class="fragment">BUT</p>
-                    <p class="fragment">Feature requests connected to packages in the framework are still requested to go through the framework first</p>
-                    <p class="fragment">Packages in Joomla are divided up the following way:</p>
-                    <ul class="fragment">
-                        <li>Packages in the Joomla Framework: libraries/joomla</li>
-                        <li>Packages used in the CMS but not in the framework: libraries/cms</li>
-                        <li>Depracted packages in the CMS: libraries/legacy</li>
-                    </ul>
-                    <p class="fragment">Note this rearranging is an ongoing process but should be done well before 3.5</p>
-                </section>
-
-                <section>
-                    <section>
-                        <h2>Joomla AJAX Component</h2>
-                        <p>Currently it's very hard to implement AJAX in a Joomla module or plugin without having to create a new entry point. Of course a new entry point is potentially vulnerable if coded badly.</p>
-                    </section>
-                    <section>
-                        <h2>Usage</h2>
-                        <pre><code data-trim contenteditable style="width:1200px;margin-left:-175px;">
-$.ajax({
-    type: "POST",
-    url: "localhost/joomla32/index.php?option=com_ajax&module=foo&method=submit&format=json",
-    data: request,
-    success:function(response){
-        if (response.sucess)
-        {
-            // Create a success message. Maybe reset the form etc.
-            Joomla.renderMessages(Joomla.JText._('MOD_FOO_SUCCESS'));
-
-            // We can retrieve data as well - see the docs on JResponseJson
-            $('#response').val = response.data['success'];
-        }
-        else
-        {
-            // Create a error message
-            Joomla.renderMessages(Joomla.JText._('MOD_FOO_ERROR_IN_JS'));
-        }
-});
-</code></pre>
-					</section>
-                </section>
-
-                <section>
-                    <section>
-                        <h2>Content Versioning</h2>
-                        <ul>
-                            <li>Used to keep copies of articles/weblinks/contact (or any content items) in Joomla or any other third party component content if enabled</li>
-                            <li>Easy to implement in any component with only a handful of lines of code</li>
-                        </ul>
-                    </section>
-                    <section>
-                        <h2>Let's have a play about with Content Versioning!</h2>
-						<a href="https://github.com/joomla/joomla-cms/pull/2141/files">Pull request for implementing this in banners</a>
-                    </section>
-                    <section>
-                        <h2>Behind the scenes</h2>
-                        <ul>
-                            <li>This uses lots of the UCM API</li>
-                            <li class="fragment">Wait didn't you just say UCM was coming to Joomla! 4?
-                            <ul>
-                                <li>A basic UCM API was introduced by tags in Joomla 3.1 - we'll come back to this later</li>
-                            </ul></li>
-                        </ul>
-                    </section>
-                </section>
-
-                <section>
-                    <section>
-                        <h2>What is UCM</h2>
-                        <img src="images/ucm-google-group.png" alt="UCM was introduced to the Joomla Platform in 2011" height="500px" />
-                        <p>A Unified Content Model (UCM) was first introduced to the Joomla Platform in December 2011</p>
-                    </section>
-
-                    <section>
-                        <h2>What is UCM</h2>
-                        <p>It suggests content has the same basis and can be grouped together</p>
-                        <p>For example the majority of content has a title, enabled state, checkin, created by dates etc.</p>
-                    </section>
-
-                    <section>
-                        <h2>Familiar Fields?</h2>
-                        <img src="images/ucm-table.png" alt="The UCM core table" />
-                    </section>
-
-                    <section>
-                        <h2>Content Types</h2>
-                        <img src="images/content-types-article.png" alt="The content-types table" />
-                    </section>
-
-                    <section>
-                        <h2>Implementation of UCM</h2>
-                        <ul>
-                            <li>A basic UCM API was introduced by tags in Joomla 3.1
-                            <ul>
-                                <li>3 Database tables - #__content_types, #__ucm_base, #__ucm_content) (only the first is being used currently)</li>
-                                <li>3 classes contained in <blockquote>libraries/cms/ucm</blockquote></li>
-                            </ul></li>
-                            <li>Will be much expanded in Joomla 4.x</li>
+                            <li>PHP4 leftover<ul>
+								<li>From a time where public and private variables didn't exist!<ul>
+									<li>We can just use class variables directly</li>
+									<li>For data sets (e.g. JTable or a "item") we can use JRegistry which has more features and is more "PHP5 friendly"</li>
+								</ul></li>
+								<li>Also deals with JErrors - but PHP5 introduced Exceptions to replace these!</li>
+							</ul></li>
                         </ul>
                     </section>
 
                     <section>
-                        <h2>How can I use UCM?</h2>
-                        <p>Example of use as part of the ordering field in Joomla</p>
-                        <pre><code data-trim contenteditable>
-$categoryId	= (int) $this->form->getValue('catid');
-$contentType = (string) $this->element['content_type'];
-
-$ucmType = new JUcmType;
-$ucmRow = $ucmType->getType($ucmType->getTypeId($contentType));
-
-$db = JFactory::getDbo();
-$query = $db->getQuery(true);
-$query->select(array($db->quoteName(json_decode($ucmRow->field_mappings)->common->core_ordering, 'value'),
-                        $db->quoteName(json_decode($ucmRow->field_mappings)->common->core_title, 'text')))
-    ->from($db->quoteName(json_decode($ucmRow->table)->special->dbtable))
-    ->where($db->quoteName('catid') . ' = ' . (int) $categoryId)
-    ->order('ordering');
-
-return $query;
-                        </code></pre>
-                    </section>
-                </section>
-
-                <section>
-                    <section>
-                        <h2>Hierarchical model–view–controller (HMVC)</h2>
+                        <h2>Aim 2: Hierarchical model–view–controller (HMVC)</h2>
                         <ul>
                             <li>Many of you are familiar with MVC - however it breaks the DRY principle!!</li>
                             <li>The principle of HMVC is that you can call the code from anywhere. Imagine calling your backend model in your frontend</li>
                             <li>... or in a module?</li>
-                            <li>This is actually already done in the RAD layer (Akeeba's FOF) - possibly mentioned in Paul Orwig's talk on this already</li>
+                            <li>This is actually already done in the RAD layer (Akeeba's FOF)</li>
                         </ul>
                         <pre><code data-trim contenteditable style="width:1100px;margin-left:-100px;">FOFDispatcher::getTmpInstance('com_foobar', 'items', array('input' => $input))->dispatch();</code></pre>
                     </section>
-                </section>
 
-                <section>
-                    <h2>Stop the Press!</h2>
-                    <h4>Form Fields</h4>
-                    <p>Now support nearly all HTML5 attributes</p>
-                    <h4>Repeatable Form Fields</h4>
-                    <p>Allows users to input as many fields as desired</p>
-                    <h4>jQuery for JS</h4>
-                    <p>The majority of jQuery usage in Joomla 3.2 has been moved from Mootools to jQuery</p>
-                    <h4>TinyMCE 4</h4>
-                    <p>Update to TinyMCE 4. More mobile friendly.</p>
-                    <h4>Revamped Joomla Template Manager</h4>
-                    <p>Almost completely rewritten.</p>
+					<section>
+                        <h2>Aim 3: Be Consistent with the base Joomla! Framework/Platform Classes</h2>
+                        <ul>
+                            <li>Single Task controllers</li>
+							<li>Supporting more than 'just' PHP native views (e.g. Twig, Mustache etc.)</li>
+                            <li>Very basic implementation - much to expand on!</li>
+                        </ul>
+                    </section>
+
+					<section>
+                        <h2>Aim 4: Flexability</h2>
+                        <ul>
+                            <li>The only thing I will bet on is that PHP in two years time will be vastly different to PHP now!</li>
+							<li>The code needs to be as flexible as possible to accomodate any future changes<ul>
+								<li>Use Interfaces</li>
+								<li>Dependency Injection<li>
+								<li>Look at what other people are doing!</li>
+							</ul></li>
+                        </ul>
+                    </section>
                 </section>
 
                 <section>
