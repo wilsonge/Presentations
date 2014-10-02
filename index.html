@@ -56,7 +56,9 @@
                             </ul></li>
 							<li>Senior Developer for Virya Group</li>
                             <li><span style="font-weight: bold;">Ex</span> Student - Specialising in drinking, with a minor in physics</li>
-                            <li>Play the saxophone</li>
+                            <li>Play the saxophone<ul class="fragment">
+								<li>Badly</li>
+							</ul></li>
                         </ul>
                     </div>
                 </section>
@@ -100,12 +102,47 @@
                         <ul>
                             <li>The only thing I will bet on is that PHP in two years time will be vastly different to PHP now!</li>
 							<li>The code needs to be as flexible as possible to accomodate any future changes<ul>
-								<li>Use Interfaces</li>
-								<li>Dependency Injection<li>
+								<li>Use Interfaces - Common functions makes it easier for developers!</li>
+								<li>Dependency Injection</li>
 								<li>Look at what other people are doing!</li>
 							</ul></li>
                         </ul>
                     </section>
+                </section>
+
+				<section>
+					<section>
+                        <h2>The Platform/Framework MVC Classes</h2>
+                        <ul>
+                            <li>Introduced to the Platform in 2011</li>
+							<li>Introduced to the CMS in 3.0</li>
+							<li>First used in the CMS in 3.3 in a com_config refactor</li>
+							<li>Largely unchanged in it's framework counterpart (2013)</li>
+							<li>Controller and Model packages successfully tried and tested in the JIssues tracker<ul>
+								<li>View Package unused due to use of Twig in views</li>
+							</ul></li>
+                        </ul>
+                    </section>
+					<section>
+                        <h2>The Platform/Framework MVC Classes: What Changed?</h2>
+                        <ul>
+							<li>Controller, Model and Views all now have interfaces for easier plug and play</li>
+							<li>Dependency Injection (e.g. JApplication and JInput into JController)</li>
+                            <li>Multitask->Single Task Controllers (more on this later)</li>
+							<li>The model state is a JRegistry rather than a JObject</li>
+							<li>Views now have an explicit HTML class</li>
+						</ul>
+                    </section>
+				</section>
+
+				<section>
+					<p>Soo ummmmmm that's cool and stuff but is that it?</p>
+					<p class="fragment">Leaves a lot to be implemented by us in the CMS!!</p>
+				</section>
+
+				<section>
+                    <h2>Time to look through a component</h2>
+                    <p>Feel free to ask any questions you want along the way<span class="fragment"> and question my inability to code<span>!</p>
                 </section>
 
                 <section>
