@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 
-		<title>The new Joomla! MVC</title>
+		<title>Joomla Modules (Beyond the Basics)</title>
 
 		<meta name="description" content="Presentation for Joomla Day UK 2014">
 		<meta name="author" content="George Wilson">
@@ -34,8 +34,8 @@
 			<!-- Any section element inside of this container is displayed as a slide -->
 			<div class="slides">
 				<section>
-					<h1>The new MVC for Joomla!</h1>
-					<h3>Investigating the new MVC produced as part of Google Summer of Code (GSOC) 2014</h3>
+					<h1>Joomla Modules (Beyond the Basics)</h1>
+					<h3>Taking a deeper dive</h3>
 					<p>
 						<small>By <a href="http://www.joomjunk.co.uk" target="_blank">George Wilson</a> / <a href="http://twitter.com/GW1992">@GW1992</a></small>
 					</p>
@@ -63,134 +63,31 @@
                     </div>
                 </section>
 
-                <section>
-					 <section>
-                        <h2>Aim 1: Remove JObject</h2>
-                        <ul>
-                            <li>PHP4 leftover<ul>
-								<li>From a time where public and private variables didn't exist!<ul>
-									<li>We can just use class variables directly</li>
-									<li>For data sets (e.g. JTable or a "item") we can use JRegistry which has more features and is more "PHP5 friendly"</li>
-								</ul></li>
-								<li>Also deals with JErrors - but PHP5 introduced Exceptions to replace these!</li>
-							</ul></li>
-                        </ul>
-                    </section>
-
-                    <section>
-                        <h2>Aim 2: Hierarchical model–view–controller (HMVC)</h2>
-                        <ul>
-                            <li>Many of you are familiar with MVC - however it breaks the DRY principle!!</li>
-                            <li>The principle of HMVC is that you can call the code from anywhere. Imagine calling your backend model in your frontend</li>
-                            <li>... or in a module?</li>
-                            <li>This is actually already done in the RAD layer (Akeeba's FOF)</li>
-                        </ul>
-                        <pre><code data-trim contenteditable style="width:1100px;margin-left:-100px;">FOFDispatcher::getTmpInstance('com_foobar', 'items', array('input' => $input))->dispatch();</code></pre>
-                    </section>
-
-					<section>
-                        <h2>Aim 3: Be Consistent with the base Joomla! Framework/Platform Classes</h2>
-                        <ul>
-                            <li>Single Task controllers</li>
-							<li>Supporting more than 'just' PHP native views (e.g. Twig, Mustache etc.)</li>
-                            <li>Very basic implementation - much to expand on!</li>
-                        </ul>
-                    </section>
-
-					<section>
-                        <h2>Aim 4: Flexability</h2>
-                        <ul>
-                            <li>The only thing I will bet on is that PHP in two years time will be vastly different to PHP now!</li>
-							<li>The code needs to be as flexible as possible to accomodate any future changes<ul>
-								<li>Use Interfaces - Common functions makes it easier for developers!</li>
-								<li>Dependency Injection</li>
-								<li>Look at what other people are doing!</li>
-							</ul></li>
-                        </ul>
-                    </section>
+				<section>
+					<h2>Database Interactions</h2>
+					<ul>
+						<li>Normally moved into the helper to keep layouts to be layouts</li>
+					</ul>
                 </section>
 
 				<section>
-					<section>
-                        <h2>The Platform/Framework MVC Classes</h2>
-                        <ul>
-                            <li>Introduced to the Platform in 2011</li>
-							<li>Introduced to the CMS in 3.0</li>
-							<li>First used in the CMS in 3.3 in a com_config refactor</li>
-							<li>Largely unchanged in it's framework counterpart (2013)</li>
-							<li>Controller and Model packages successfully tried and tested in the JIssues tracker<ul>
-								<li>View Package unused due to use of Twig in views</li>
-							</ul></li>
-                        </ul>
-                    </section>
-					<section>
-                        <h2>The Platform/Framework MVC Classes: What Changed?</h2>
-                        <ul>
-							<li>Controller, Model and Views all now have interfaces for easier plug and play</li>
-							<li>Dependency Injection (e.g. JApplication and JInput into JController)</li>
-                            <li>Multitask->Single Task Controllers (more on this later)</li>
-							<li>The model state is a JRegistry rather than a JObject</li>
-							<li>Views now have an explicit HTML class</li>
-						</ul>
-                    </section>
-				</section>
+					<h2>Custom Form Fields</h2>
+					<ul>
+						<li>Useful for more advanced modules where you require custom functionality<ul>
+							<li>Where to include jQuery on Joomla 2.5 only</li>
+						</ul></li>
+					</ul>
+                </section>
 
 				<section>
-					<p>Soo ummmmmm that's cool and stuff but is that it?</p>
-					<p class="fragment">Leaves a lot to be implemented by us in the CMS!!</p>
-				</section>
+					<h2>Integrating 3rd Party API's</h2>
+					<ul>
+						<li>We have a bunch of useful 3rd Party API's in the Joomla core. How do these function?</li>
+					</ul>
+                </section>
 
 				<section>
-					<section>
-						<h2>Controllers</h2>
-						<ul>
-							<li>No longer extend JObject</li>
-							<li>All single task controllers extend a base controller</li>
-							<li>Injection of JApplicationCms, JInput and JDocument</li>
-						</ul>
-					</section>
-				</section>
-
-				<section>
-					<section>
-						<h2>Models</h2>
-						<ul>
-							<li>No longer extend JObject</li>
-							<li>Nested Model Structure to improve reuse of code</li>
-							<li>The state is now a JRegistry instance (rather than JObject)</li>
-							<li>JModel::getItem() now returns a stdClass rather than a JObject</li>
-						</ul>
-					</section>
-				</section>
-
-				<section>
-					<section>
-						<h2>Views</h2>
-						<ul>
-							<li>No longer extend JObject</li>
-							<li>Uses the renderer interface found from the JIssues tracker<ul>
-								<li>Slated for inclusion in v2.0 of the framework</li>
-								<li>Default renderer is going to be JLayouts</li>
-							</ul></li>
-							<li>Removed magic get/set methods - data should be retrieved from the injected models<ul>
-								<li>Can be achieved now in your components - be proactive and give it a try!</li>
-							</ul></li>
-						</ul>
-					</section>
-					<section>
-						<h2>Views: Supporting old views</h2>
-						<ul>
-							<li>A still to be determined "legacy" class allowing your current component views to work</li>
-							<li>Currently extends JViewLegacy to support some awful JLayout code<ul>
-								<li>Will probably stop this by writing a new JLayout doing the same job</li>
-							</ul></li>
-						</ul>
-					</section>
-				</section>
-
-				<section>
-                    <h2>Time to look through a component</h2>
-                    <p>Feel free to ask any questions you want along the way<span class="fragment"> and question my inability to code<span>!</p>
+					<h2>com_ajax</h2>
                 </section>
 
                 <section>
