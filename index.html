@@ -141,6 +141,54 @@
 				</section>
 
 				<section>
+					<section>
+						<h2>Controllers</h2>
+						<ul>
+							<li>No longer extend JObject</li>
+							<li>All single task controllers extend a base controller</li>
+							<li>Injection of JApplicationCms, JInput and JDocument</li>
+						</ul>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h2>Models</h2>
+						<ul>
+							<li>No longer extend JObject</li>
+							<li>Nested Model Structure to improve reuse of code</li>
+							<li>The state is now a JRegistry instance (rather than JObject)</li>
+							<li>JModel::getItem() now returns a stdClass rather than a JObject</li>
+						</ul>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h2>Views</h2>
+						<ul>
+							<li>No longer extend JObject</li>
+							<li>Uses the renderer interface found from the JIssues tracker<ul>
+								<li>Slated for inclusion in v2.0 of the framework</li>
+								<li>Default renderer is going to be JLayouts</li>
+							</ul></li>
+							<li>Removed magic get/set methods - data should be retrieved from the injected models<ul>
+								<li>Can be achieved now in your components - be proactive and give it a try!</li>
+							</ul></li>
+						</ul>
+					</section>
+					<section>
+						<h2>Views: Supporting old views</h2>
+						<ul>
+							<li>A still to be determined "legacy" class allowing your current component views to work</li>
+							<li>Currently extends JViewLegacy to support some awful JLayout code<ul>
+								<li>Will probably stop this by writing a new JLayout doing the same job</li>
+							</ul></li>
+						</ul>
+					</section>
+				</section>
+
+				<section>
                     <h2>Time to look through a component</h2>
                     <p>Feel free to ask any questions you want along the way<span class="fragment"> and question my inability to code<span>!</p>
                 </section>
