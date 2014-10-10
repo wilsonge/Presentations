@@ -145,7 +145,7 @@ else
 						<h2>So who's "right"</h2>
 						<ul>
 							<li>From a technical standpoint of the code there is no limit on the number of clients allowed</li>
-							<li>The code for my OAuth1 server is techincally correct</li>
+							<li>The code for my OAuth1 server is technically correct</li>
 							<li>But at the point where mass implementation kicks in this is clearly never going to make it into core</li>
 						</ul>
 					</section>
@@ -179,6 +179,21 @@ else
                     <p>Feel free to ask any questions you want</p>
                     <p>I hope I've given you all something to think about!!</p>
                 </section>
+
+				<section>
+					<h2>The technically correct way</h2>
+					<pre><code data-trim contenteditable style="width:1200px;margin-left:-175px;">
+					$app = JFactory::getApplication();
+
+if ($app->isAdmin())
+{
+	// I'm in the backend
+}
+elseif ($app->isSite())
+{
+	// I'm in the frontend
+}
+</code></pre>
 			</div>
 
 		</div>
