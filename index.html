@@ -98,21 +98,80 @@
 				<section>
 					<section>
 						<h2>More or less clear?: Background</h2>
-						<p>So now lets take another example. With the CMSs JApplication layer you can create "clients"</p>
-						<p>You'd be familiar with the main 2 - "site" and "administrator"</p>
-						<p>When you do JApplication->isSite() or isAdmin(), you are actually checking these clients.</p>
+						<ul>
+							<li>So now lets take another example. With the CMSs JApplication layer you can create "clients"</li>
+							<li>You'd be familiar with the main 2 - "site" and "administrator"</li>
+							<li>When you do JApplication->isSite() or isAdmin(), you are actually checking these clients.</li>
+						</ul>
 					</section>
 					<section>
 						<h2>More or less clear?: The principle</h2>
-						<p>I've built this super thing for Joomla! 3.5 - OAuth1 Server</p>
-						<p>Requires new application client to run things (logically)</p>
-						<p>Can anyone see the problem yet?</p>
+						<ul>
+							<li>I've built this super thing for Joomla! 3.5 - OAuth1 Server</li>
+							<li>Requires new application client to run things (logically)</li>
+							<li>Can anyone see the problem yet?</li>
+						</ul>
 					</section>
 					<section>
-						<code>
-							
-						</code>
+						<h2>Who recognises code like this?</h2>
+						<pre><code data-trim contenteditable style="width:1200px;margin-left:-175px;">
+$app = JFactory::getApplication();
+if ($app->isAdmin())
+{
+	// Do something in the backend
+}
+else
+{
+	// We are in the frontend - do something else
+}
+</code></pre>
 					</section>
+					<section>
+						<h2>Oh dear</h2>
+						<pre><code data-trim contenteditable style="width:1200px;margin-left:-175px;">
+$app = JFactory::getApplication();
+if ($app->isAdmin())
+{
+	// Do something in the backend
+}
+else
+{
+	// We are in the frontend - do something else
+	// Oh wait - or are we in the new OAuth1 layer? (ooops)
+}
+</code></pre>
+					</section>
+					<section>
+						<h2>So who's "right"</h2>
+						<ul>
+							<li>From a technical standpoint of the code there is no limit on the number of clients allowed</li>
+							<li>The code for my OAuth1 server is techincally correct</li>
+							<li>But at the point where mass implementation kicks in this is clearly never going to make it into core</li>
+						</ul>
+					</section>
+				</section>
+
+				<section>
+					<h2>The black, the white and the grey</h2>
+					<ul>
+						<li>When we say we aren't going to break b/c what actually is and isn't backwards compatible?<ul>
+							<li class="fragment">What happens if someone in JED had already made a com_tags component?</li>
+							<li class="fragment">What happens if my new class called JViewHtmlCms (new MVC) conflicts with a "new" MVC class someone else has built</li>
+						</ul></li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>The black, the white and the grey: Conclusion</h2>
+					<ul>
+						<li>At the end of the day there is no perfect definition of what is and isn't a b/c break</li>
+						<li>So has the new policy on backwards compatibility really helped us?</li>
+						<li>Does the policy even make sense in extensions</li>
+						<li>We need to be able to define what is and isn't in the API<ul>
+							<li>@api in the doc block?</li>
+							<li>Interaces only?</li>
+						</ul></li>
+					</ul>
 				</section>
 
                 <section>
