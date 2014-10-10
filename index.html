@@ -3,9 +3,9 @@
 	<head>
 		<meta charset="utf-8">
 
-		<title>Joomla Modules (Beyond the Basics)</title>
+		<title>Joomla & Backwards Compatability</title>
 
-		<meta name="description" content="Presentation for Joomla Day UK 2014">
+		<meta name="description" content="Presentation for Joomla Day Spain 2014">
 		<meta name="author" content="George Wilson">
 
 		<meta name="apple-mobile-web-app-capable" content="yes" />
@@ -34,8 +34,8 @@
 			<!-- Any section element inside of this container is displayed as a slide -->
 			<div class="slides">
 				<section>
-					<h1>Joomla Modules (Beyond the Basics)</h1>
-					<h3>Taking a deeper dive</h3>
+					<h1>Joomla! and Backwards Compatability</h1>
+					<h3>Yes I'm actually going there!!</h3>
 					<p>
 						<small>By <a href="http://www.joomjunk.co.uk" target="_blank">George Wilson</a> / <a href="http://twitter.com/GW1992">@GW1992</a></small>
 					</p>
@@ -51,11 +51,11 @@
                             <li>Website Enthusiast
                             <ul>
                                 <li>Developing extensions for Joomla! for the last 4 years</li>
-                                <li>Contributing to the Joomla Docs for the last 2.5 years</li>
+                                <li>Contributing to the Joomla! Docs for the last 2.5 years</li>
                                 <li>Contributing to core for the last 2 years</li>
                             </ul></li>
-							<li>Senior Developer for Virya Group</li>
                             <li><span style="font-weight: bold;">Ex</span> Student - Specialising in drinking, with a minor in physics</li>
+							<li>Senior Developer for Virya Group</li>
                             <li>Play the saxophone<ul class="fragment">
 								<li>Badly</li>
 							</ul></li>
@@ -64,36 +64,61 @@
                 </section>
 
 				<section>
-					<h2>Database Interactions</h2>
+					<h2>Joomla!'s Backwards Compatability Promise from Joomla 3.3</h2>
 					<ul>
-						<li>Normally moved into the helper to keep layouts to be layouts</li>
+						<li>Literally nothing can be broken<ul>
+							<li>Whether in an extension or core library</li>
+						</ul>
 					</ul>
                 </section>
 
 				<section>
-					<h2>Custom Form Fields</h2>
-					<ul>
-						<li>Useful for more advanced modules where you require custom functionality<ul>
-							<li>Where to include jQuery on Joomla 2.5 only</li>
-						</ul></li>
-					</ul>
+					<section>
+						<h2>But does this help</h2>
+						<ul>
+							<li>Let's introduce a hypothetical interface called JTableInterface which JTable should implement</li>
+							<li class="fragment">Let's make JTable implement it</li>
+							<li class="fragment">Now anybody who has E_STRICT errors in JTable will get an E_FATAL error</li>
+							<li class="fragment">Technically this is a b/c break as the site would actually work with an E_STRICT and error reporting turned down</li>
+						</ul>
+					</section>
+					<section>
+						<h2>Who thinks this interface should be allowed to be put in Joomla! core?</h2>
+					</section>
+					<section>
+						<h2>Not quite so hypothetical!</h2>
+						<ul>
+							<li>This actually happened in Joomla 3.3 and allowed us to put tags and content history integration into F0F (and FOF packaged in core from Joomla! 3.4)<ul>
+								<li>Not quite so clear cut!</li>
+							</ul></li>
+						</ul>
+					</section>
                 </section>
 
 				<section>
-					<h2>Integrating 3rd Party API's</h2>
-					<ul>
-						<li>We have a bunch of useful 3rd Party API's in the Joomla core. How do these function?</li>
-					</ul>
-                </section>
-
-				<section>
-					<h2>com_ajax</h2>
-                </section>
+					<section>
+						<h2>More or less clear?: Background</h2>
+						<p>So now lets take another example. With the CMSs JApplication layer you can create "clients"</p>
+						<p>You'd be familiar with the main 2 - "site" and "administrator"</p>
+						<p>When you do JApplication->isSite() or isAdmin(), you are actually checking these clients.</p>
+					</section>
+					<section>
+						<h2>More or less clear?: The principle</h2>
+						<p>I've built this super thing for Joomla! 3.5 - OAuth1 Server</p>
+						<p>Requires new application client to run things (logically)</p>
+						<p>Can anyone see the problem yet?</p>
+					</section>
+					<section>
+						<code>
+							
+						</code>
+					</section>
+				</section>
 
                 <section>
                     <h2>Time to wake up and interact now!</h2>
                     <p>Feel free to ask any questions you want</p>
-                    <p>I hope I've given plenty of reason's to say #jpositiv</p>
+                    <p>I hope I've given you all something to think about!!</p>
                 </section>
 			</div>
 
