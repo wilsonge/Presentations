@@ -34,10 +34,10 @@
 			<!-- Any section element inside of this container is displayed as a slide -->
 			<div class="slides">
 				<section>
-					<h1>The new MVC for Joomla!</h1>
+					<h1>A new MVC for Joomla!</h1>
 					<h3>Investigating the new MVC produced as part of Google Summer of Code (GSOC) 2014</h3>
 					<p>
-						<small>By <a href="http://www.joomjunk.co.uk" target="_blank">George Wilson</a> / <a href="http://twitter.com/GW1992">@GW1992</a></small>
+						<small>By <a href="http://www.gwilson.org" target="_blank">George Wilson</a> / <a href="http://twitter.com/GW1992">@GW1992</a></small>
 					</p>
 				</section>
 
@@ -48,14 +48,14 @@
                     </div>
                     <div style="float:right;width:75%;">
                         <ul>
+							<li>Graduate from the University of Bristol in June with a MSci in Physics</li>
                             <li>Website Enthusiast
                             <ul>
-                                <li>Developing extensions for Joomla! for the last 4 years</li>
+                                <li>Developing extensions for Joomla! for the last 4 years (under <a href="http://www.joomjunk.co.uk" target="_blank">JoomJunk</a> label)</li>
                                 <li>Contributing to the Joomla Docs for the last 2.5 years</li>
                                 <li>Contributing to core for the last 2 years</li>
                             </ul></li>
 							<li>Senior Developer for Virya Group</li>
-                            <li><span style="font-weight: bold;">Ex</span> Student - Specialising in drinking, with a minor in physics</li>
                             <li>Play the saxophone<ul class="fragment">
 								<li>Badly</li>
 							</ul></li>
@@ -74,6 +74,7 @@
 								</ul></li>
 								<li>Also deals with JErrors - but PHP5 introduced Exceptions to replace these!</li>
 							</ul></li>
+							<li>Deprecated from Joomla 3.4 to be removed in Joomla 4.0</li>
                         </ul>
                     </section>
 
@@ -101,7 +102,7 @@
                         <h2>Aim 4: Flexability</h2>
                         <ul>
                             <li>The only thing I will bet on is that PHP in two years time will be vastly different to PHP now!</li>
-							<li>The code needs to be as flexible as possible to accomodate any future changes<ul>
+							<li>The code needs to be as flexible as possible to accommodate any future changes<ul>
 								<li>Use Interfaces - Common functions makes it easier for developers!</li>
 								<li>Dependency Injection</li>
 								<li>Look at what other people are doing!</li>
@@ -116,10 +117,10 @@
                         <ul>
                             <li>Introduced to the Platform in 2011</li>
 							<li>Introduced to the CMS in 3.0</li>
-							<li>First used in the CMS in 3.3 in a com_config refactor</li>
+							<li>First used in the CMS in 3.3 in a com_config re-factor</li>
 							<li>Largely unchanged in it's framework counterpart (2013)</li>
 							<li>Controller and Model packages successfully tried and tested in the JIssues tracker<ul>
-								<li>View Package unused due to use of Twig in views</li>
+								<li>View Package pretty much unused due the tracker choosing to use Twig in views</li>
 							</ul></li>
                         </ul>
                     </section>
@@ -182,7 +183,7 @@
 						<ul>
 							<li>A still to be determined "legacy" class allowing your current component views to work</li>
 							<li>Currently extends JViewLegacy to support some awful JLayout code<ul>
-								<li>Will probably stop this by writing a new JLayout doing the same job</li>
+								<li>Will stop this by writing a new JLayout doing the same job and taking a legacy view similar to that in the com_config implementation</li>
 							</ul></li>
 						</ul>
 					</section>
@@ -193,10 +194,48 @@
                     <p>Feel free to ask any questions you want along the way<span class="fragment"> and question my inability to code<span>!</p>
                 </section>
 
+				<section>
+					<section>
+						<h2>So what can you do with Legacy MVC to prepare yourself</h2>
+						<ul>
+							<li>Inject the state into your models from the controller via $config['state'] and $config['ignore_request']</li>
+							<li>Stop using get() in your views. e.g. Instead of $this->get('Items') use $this->getModel()->getItems()</li>
+							<li>Clean up your views. Make sure any getting of data from models belongs in view.html.php. Not in default.php!<ul>
+								<li>Makes transitions to JLayouts as easy as changing $this to $displayData</li>
+							</ul></li>
+						</ul>
+					</section>
+					<section>
+						<h2>So what can you do with Legacy MVC to prepare yourself</h2>
+						<ul>
+							<li>Reduce dependencies on JObject<ul>
+								<li>Try to avoid using getProperties() and setProperties where possible</li>
+								<li>Where being replaced by JRegistry remember get() and set() are still perfectly acceptable!</li>
+							</ul></li>
+							<li>Try using exceptions <b>where possible</b> rather than using JError</li>
+						</ul>
+					</section>
+				</section>
+
+				<section>
+					<h2>Where am I going?</h2>
+					<ol>
+						<li>Sort out the issues with JViewLegacy with JLayouts</li>
+						<li>Kill the populate state function and make people initialise the state in the controller</li>
+						<li>Controllers that call a controller!!<ul>
+							<li>Save and Close controller should actually be just calling the save controller called followed by calling the close controller!</li>
+						</ul></li>
+						<li>Unit tests</li>
+					</ol>
+				</section>
+
                 <section>
                     <h2>Time to wake up and interact now!</h2>
                     <p>Feel free to ask any questions you want</p>
                     <p>I hope I've given plenty of reason's to say #jpositiv</p>
+					<p style="margin-top: 10%">
+						<small>By <a href="http://www.gwilson.org" target="_blank">George Wilson</a> / <a href="http://twitter.com/GW1992">@GW1992</a></small>
+					</p>
                 </section>
 			</div>
 
