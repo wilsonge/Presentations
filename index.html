@@ -173,9 +173,7 @@
 								<li>Slated for inclusion in v2.0 of the framework</li>
 								<li>Default renderer is going to be JLayouts</li>
 							</ul></li>
-							<li>Removed magic get/set methods - data should be retrieved from the injected models<ul>
-								<li>Can be achieved now in your components - be proactive and give it a try!</li>
-							</ul></li>
+							<li>Removed magic get/set methods - data should be retrieved from the injected models</li>
 						</ul>
 					</section>
 					<section>
@@ -225,6 +223,7 @@
 						<li>Controllers that call a controller!!<ul>
 							<li>Save and Close controller should actually be just calling the save controller called followed by calling the close controller!</li>
 						</ul></li>
+						<li>Any use of JText::_('FOO') in the controller should be moved into the factory class</li>
 						<li>Unit tests</li>
 					</ol>
 				</section>
