@@ -181,9 +181,40 @@
 				</section>
 
 				<section>
-					<h2>Dealing with Injecting Data - DI</h2>
-					<p>One of the most obvious things missing from Joomla Core which is now widely accepted in the PHP community is Dependency Injection (DI)</p>
-					<img src="images/using-di.png" alt="George Wilson" />
+					<section>
+						<h2>Dealing with Injecting Data - DI</h2>
+						<p>One of the most obvious things missing from Joomla Core which is now widely accepted in the PHP community is Dependency Injection (DI)</p>
+						<img src="images/using-di.png" alt="George Wilson" />
+					</section>
+					<section>
+						<h2>Dealing with Injecting Data - DI</h2>
+						<p>Caveat - I don't expect the first version of this to include DI - it's something we would need Joomla to implement first across board</p>
+					</section>
+                </section>
+
+				<section>
+					<section>
+						<h2>Dealing with Responses - Symfony Style</h2>
+						<p>One of the issues with web services in Joomla is how our controllers perform redirects</p>
+						<p>Symfony controllers return a response object</p>
+					</section>
+					<section>
+						<h2>Symfony's Response Object</h2>
+						<img src="images/symfony-response.png" alt="George Wilson" />
+					</section>
+					<section>
+						<h2>Using Symfony's Response Object in Joomla!</h2>
+						<h3 class="fragment">Pros</h3>
+						<ul class="fragment">
+							<li>Redirects handled at a later stage in the application cycle</li>
+							<li>We can alter the response (Web applications probably don't want to do the hardcoded redirects!)</li>
+						</ul>
+						<h3 class="fragment">Con</h3>
+						<ul class="fragment">
+							<li>More work for extension developers to implement</li>
+							<li>Higher entry point for developers</li>
+						</ul>
+					</section>
                 </section>
 
 				<section>
@@ -202,7 +233,7 @@
 						<ul>
 							<li>Reduce dependencies on JObject<ul>
 								<li>Try to avoid using getProperties() and setProperties where possible</li>
-								<li>Where being replaced by JRegistry remember get() and set() are still perfectly acceptable!</li>
+								<li>JRegistry get() and set() are still perfectly acceptable for more complex data storage!</li>
 							</ul></li>
 							<li>Try using exceptions <b>where possible</b> rather than using JError</li>
 						</ul>
@@ -213,7 +244,7 @@
 					<h2>Where am I going?</h2>
 					<ol>
 						<li>Sort out the issues with JViewLegacy with JLayouts</li>
-						<li>Kill the populate state function and make people initialise the state in the controller</li>
+						<li>Kill the populate state function and force people to initialise the state in the controller (note however if we build the object with DI we can't do this in the constructor)</li>
 						<li>Controllers that call a controller!!<ul>
 							<li>Save and Close controller should actually be just calling the save controller called followed by calling the close controller!</li>
 						</ul></li>
@@ -231,8 +262,6 @@
 					</p>
                 </section>
 			</div>
-
-
 		</div>
 		<script src="lib/js/head.min.js"></script>
 		<script src="js/reveal.min.js"></script>
@@ -262,6 +291,5 @@
 			});
 
 		</script>
-
 	</body>
 </html>
