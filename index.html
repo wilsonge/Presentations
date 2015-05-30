@@ -186,10 +186,49 @@
 					<img src="images/using-di.png" alt="George Wilson" />
                 </section>
 
+				<section>
+					<section>
+						<h2>So what can you do with Legacy MVC to prepare yourself</h2>
+						<ul>
+							<li>Inject the state into your models from the controller via $config['state'] and $config['ignore_request']</li>
+							<li>Stop using get() in your views. e.g. Instead of $this->get('Items') use $this->getModel()->getItems()</li>
+							<li>Clean up your views. Make sure any getting of data from models belongs in view.html.php. Not in default.php!<ul>
+								<li>Makes transitions to JLayouts as easy as changing $this to $displayData</li>
+							</ul></li>
+						</ul>
+					</section>
+					<section>
+						<h2>So what can you do with Legacy MVC to prepare yourself</h2>
+						<ul>
+							<li>Reduce dependencies on JObject<ul>
+								<li>Try to avoid using getProperties() and setProperties where possible</li>
+								<li>Where being replaced by JRegistry remember get() and set() are still perfectly acceptable!</li>
+							</ul></li>
+							<li>Try using exceptions <b>where possible</b> rather than using JError</li>
+						</ul>
+					</section>
+				</section>
+
+				<section>
+					<h2>Where am I going?</h2>
+					<ol>
+						<li>Sort out the issues with JViewLegacy with JLayouts</li>
+						<li>Kill the populate state function and make people initialise the state in the controller</li>
+						<li>Controllers that call a controller!!<ul>
+							<li>Save and Close controller should actually be just calling the save controller called followed by calling the close controller!</li>
+						</ul></li>
+						<li>Any use of JText::_('FOO') in the controller should be moved into the factory class</li>
+						<li>Unit tests</li>
+					</ol>
+				</section>
+
                 <section>
                     <h2>Time to wake up and interact now!</h2>
                     <p>Feel free to ask any questions you want</p>
                     <p>I hope I've given plenty of reason's to say #jpositiv</p>
+					<p style="margin-top: 10%">
+						<small>By <a href="http://www.gwilson.org" target="_blank">George Wilson</a> / <a href="http://twitter.com/GW1992">@GW1992</a></small>
+					</p>
                 </section>
 			</div>
 
