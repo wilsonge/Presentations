@@ -1,5 +1,5 @@
-Joomla Day UK 2013
+J and Beyond 2015
 =============
-This presentation was given on Sunday 6th October 2013 at the Joomla Day UK 2013 meetup.
+This presentation was given on Sunday 31st May 2015 at the JAB 2015 meetup on the progress on the new Joomla MVC. This session was recorded and can be found at: https://www.youtube.com/user/jandbeyondev/videos
 
 The presentation was designed in reveal.js with a custom theme.
