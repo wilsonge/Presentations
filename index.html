@@ -80,7 +80,8 @@
                             <li>Many of you are familiar with MVC - however it breaks the DRY principle!!</li>
                             <li>The principle of HMVC is that you can call the code from anywhere. Imagine calling your backend model in your frontend</li>
                             <li>... or in a module?</li>
-                            <li>This is actually already done in the RAD layer (Akeeba's FOF)</li>
+							<li>... or in a web services layer?</li>
+                            <li>This is actually already done in the RAD layer (Akeeba's FOF2)</li>
                         </ul>
                         <pre><code data-trim contenteditable style="width:1100px;margin-left:-100px;">FOFDispatcher::getTmpInstance('com_foobar', 'items', array('input' => $input))->dispatch();</code></pre>
                     </section>
@@ -98,7 +99,7 @@
                         <h2>Aim 4: Flexability</h2>
                         <ul>
                             <li>The only thing I will bet on is that PHP in two years time will be vastly different to PHP now!</li>
-							<li>The code needs to be as flexible as possible to accomodate any future changes<ul>
+							<li>The code needs to be as flexible as possible to accommodate any future changes<ul>
 								<li>Use Interfaces - Common functions makes it easier for developers!</li>
 								<li>Dependency Injection</li>
 								<li>Look at what other people are doing!</li>
@@ -137,7 +138,10 @@
 						<h2>Controllers</h2>
 						<ul>
 							<li>No longer extend JObject</li>
-							<li>All single task controllers extend a base controller</li>
+							<li>All single task controllers extend a base controller<ul>
+								<li>Single task controllers however give too many files in larger extension to work effectively.</li>
+								<li>Likely to revert back to multi-task controllers with an alternative CMS interface.</li>
+							</ul></li>
 							<li>Injection of JApplicationCms, JInput and JDocument</li>
 						</ul>
 					</section>
@@ -187,33 +191,68 @@
 						<img src="images/using-di.png" alt="George Wilson" />
 					</section>
 					<section>
-						<h2>Dealing with Injecting Data - DI</h2>
-						<p>Caveat - I don't expect the first version of this to include DI - it's something we would need Joomla to implement first across board</p>
+						<h2>Dealing with a DIC in Joomla Core</h2>
+						<p>The issue with DIC's for Joomla is that things cannot be implemented in half measures - the current database, </p>
 					</section>
                 </section>
 
 				<section>
 					<section>
-						<h2>Dealing with Responses - Symfony Style</h2>
-						<p>One of the issues with web services in Joomla is how our controllers perform redirects</p>
-						<p>Symfony controllers return a response object</p>
+						<h2>Dealing with Responses</h2>
+						<ul>
+							<li>One of the issues with web services in Joomla is how our controllers perform redirects</li>
+							<li>Many non-Joomla frameworks use Response objects to process data</li>
+						</ul>
 					</section>
 					<section>
 						<h2>Symfony's Response Object</h2>
 						<img src="images/symfony-response.png" alt="George Wilson" />
 					</section>
 					<section>
-						<h2>Using Symfony's Response Object in Joomla!</h2>
+						<h2>Symfony use in a controller</h2>
+						<pre><code data-trim contenteditable style="width:1100px;margin-left:-100px;">class HelloController
+{
+    public function indexAction($name)
+    {
+        return new Response('<html><body>Hello '.$name.'!</body></html>');
+    }
+}</code></pre>
+<p>In this scenario the controller is registered as a service provider to the global container</p>
+					</section>
+					<section>
+						<h2>Dealing with a dispatcher</h2>
+						<pre><code data-trim contenteditable style="width:1100px;margin-left:-100px;">interface DispatchableInterface
+{
+    /**
+     * Dispatch a request
+     *
+     * @param   RequestInterface        $request
+     * @param   null|ResponseInterface  $response
+	 *
+     * @return  Response|mixed
+     */
+    public function dispatch(RequestInterface $request, ResponseInterface $response = null);
+}</code></pre>
+					</section>
+					<section>
+						<h2>Using a Response Object in Joomla!</h2>
 						<h3 class="fragment">Pros</h3>
 						<ul class="fragment">
 							<li>Redirects handled at a later stage in the application cycle</li>
 							<li>We can alter the response (Web applications probably don't want to do the hardcoded redirects!)</li>
+							<li>Easier unit testing</li>
 						</ul>
 						<h3 class="fragment">Con</h3>
 						<ul class="fragment">
 							<li>More work for extension developers to implement</li>
 							<li>Higher entry point for developers</li>
 						</ul>
+					</section>
+					<section>
+						<h2>How to return a response object back to the application for processing?</h2>
+						<p>Currently in JComponentHelper (the class that dispatches components) we only retrieve the contents of the rendered data in the output buffer.</p>
+						<p class="fragment">An alternative: We can search for a component dispatcher and if one exists we can take advantage of this interface</p>
+						<p class="fragment">We can fall back to using the current output buffer method if we can't find the dispatcher to keep b/c with the current component system</p>
 					</section>
                 </section>
 
