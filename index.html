@@ -34,8 +34,8 @@
 			<!-- Any section element inside of this container is displayed as a slide -->
 			<div class="slides">
 				<section>
-					<h1>The new MVC for Joomla!</h1>
-					<h3>Investigating the new MVC produced as part of Google Summer of Code (GSOC) 2014</h3>
+					<h1>A new MVC for Joomla!</h1>
+					<h3>Investigating the new MVC produced as part of Google Summer of Code (GSOC) 2013 & 2014 & Taking it Further</h3>
 					<p>
 						<small>By <a href="http://www.joomjunk.co.uk" target="_blank">George Wilson</a> / <a href="http://twitter.com/GW1992">@GW1992</a></small>
 					</p>
@@ -55,7 +55,7 @@
                                 <li>Contributing to core for the last 2.5 years</li>
                             </ul></li>
 							<li>Senior Developer for Virya Group</li>
-                            <li><span style="font-weight: bold;">Ex</span> Student - Specialising in drinking, with a minor in physics</li>
+							<li>PLT since November 2014 - Took over as leader for 3.4, Deputy Leader for 3.5 and also heavily involved in Joomla 4 and the Joomla! Framework</li>
                         </ul>
                     </div>
                 </section>
@@ -186,13 +186,34 @@
 
 				<section>
 					<section>
-						<h2>Dealing with Injecting Data - DI</h2>
-						<p>One of the most obvious things missing from Joomla Core which is now widely accepted in the PHP community is Dependency Injection (DI)</p>
+						<h2>Dealing with Injecting Data - DIC</h2>
+						<p>One of the most obvious things missing from Joomla Core which is now widely accepted in the PHP community is a Dependency Injection Container (DIC)</p>
 						<img src="images/using-di.png" alt="George Wilson" />
 					</section>
 					<section>
 						<h2>Dealing with a DIC in Joomla Core</h2>
-						<p>The issue with DIC's for Joomla is that things cannot be implemented in half measures - the current database, </p>
+						<p>The issue with DIC's for Joomla is that things cannot be implemented in half measures - the database object, the configuration, the language object (all currently in JFactory) need to be stored in the DIC</p>
+					</section>
+					<section>
+						<h2>Use of a b/c implementation of DIC in Joomla</h2>
+						<pre><code data-trim contenteditable style="width:1100px;margin-left:-100px;">public function register(Container $container)
+{
+	// Application
+	$container->alias('app', 'JApplicationCms')
+		->share('JApplicationCms', array('JFactory', 'getApplication'));
+	// Document
+	$container->alias('document', 'JDocumentHtml')
+		->share('JDocumentHtml', array('JFactory', 'getDocument'));
+	// User
+	$container->alias('user', 'JUser')
+		->share('JUser', \JFactory::getUser());
+	// Input
+	$container->alias('input', 'JInput')
+		->share('JInput', \JFactory::getApplication()->input);
+}</code></pre>
+						<p>Source: <a href="https://github.com/ventoviro/windwalker-joomla-rad/blob/staging/src/Provider/WebProvider.php">https://github.com/ventoviro/windwalker-joomla-rad/blob/staging/src/Provider/WebProvider.php</a></p>
+						<p>Note: I was shown this last night and so I know as much as you guys!</p>
+						<p>I'm not convinced by the need to deal with </p>
 					</section>
                 </section>
 
@@ -239,7 +260,7 @@
 						<h3 class="fragment">Pros</h3>
 						<ul class="fragment">
 							<li>Redirects handled at a later stage in the application cycle</li>
-							<li>We can alter the response (Web applications probably don't want to do the hardcoded redirects!)</li>
+							<li>We can alter the response (Web applications don't care about redirects thus making the controllers unusable)</li>
 							<li>Easier unit testing</li>
 						</ul>
 						<h3 class="fragment">Con</h3>
@@ -253,6 +274,7 @@
 						<p>Currently in JComponentHelper (the class that dispatches components) we only retrieve the contents of the rendered data in the output buffer.</p>
 						<p class="fragment">An alternative: We can search for a component dispatcher and if one exists we can take advantage of this interface</p>
 						<p class="fragment">We can fall back to using the current output buffer method if we can't find the dispatcher to keep b/c with the current component system</p>
+						<p class="fragment">JComponentHelper then generates the response object based on the data returned</p>
 					</section>
                 </section>
 
@@ -280,16 +302,22 @@
 				</section>
 
 				<section>
-					<h2>Where am I going?</h2>
+					<h2>Other issues to work on</h2>
 					<ol>
 						<li>Sort out the issues with JViewLegacy with JLayouts</li>
-						<li>Kill the populate state function and force people to initialise the state in the controller (note however if we build the object with DI we can't do this in the constructor)</li>
+						<li>Kill the populate state function and force people to initialise the state in the controller (note however if we build the object with DI we can't do this in the constructor - we just use the setState in the interface)</li>
 						<li>Controllers that call a controller!!<ul>
 							<li>Save and Close controller should actually be just calling the save controller called followed by calling the close controller!</li>
 						</ul></li>
-						<li>Any use of JText::_('FOO') in the controller should be moved into the factory class</li>
+						<li>Any use of JText::_('FOO') in the controller should be moved into the factory class (the framework team are reworking several areas of the language package)</li>
 						<li>Unit tests</li>
 					</ol>
+				</section>
+
+				<section>
+					<h2>When can I expect this</h2>
+					<p>In the last 5-6 months I haven't been particularly active on the GSOC Code</p>
+					<p>With a HMVC layer being effectively required for the web services layer - I expect to start working on this again</p>
 				</section>
 
                 <section>
